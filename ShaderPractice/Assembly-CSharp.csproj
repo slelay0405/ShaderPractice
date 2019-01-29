@@ -60,7 +60,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\Scripts\SimpleShader.cs" />
     <Compile Include="Assets\Scripts\SimpleShader01.cs" />
     <None Include="Assets\Shaders\SimpleShader01.shader" />
     <Reference Include="Unity.TextMeshPro.Editor">
