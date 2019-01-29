@@ -2,6 +2,10 @@
 
 Shader "Custom/SimpleShader01"
 {
+    Properties{
+	   _Color("Color Tint",Color) = (1.0,1.0,1.0,1.0)
+	}
+
     SubShader
     {
 
@@ -10,6 +14,8 @@ Shader "Custom/SimpleShader01"
 
 			#pragma vertex vert
 			#pragma fragment frag
+
+			fixed4 _Color;
 
 			struct a2v{
 				float4 vertex : POSITION;
@@ -29,7 +35,7 @@ Shader "Custom/SimpleShader01"
 			}
 
 			fixed4 frag(v2f i) : SV_Target{
-				return fixed4(i.color,1.0);
+				return fixed4(i.color * _Color.rgb,1.0);
 			}
 
 			ENDCG
