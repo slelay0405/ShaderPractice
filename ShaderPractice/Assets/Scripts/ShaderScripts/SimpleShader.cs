@@ -2,10 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SimpleShader01 : MonoBehaviour
+public class SimpleShader : MonoBehaviour
 {
-    public Transform transform;
-
     [SerializeField]
     private float pitchSpeed = 1.0f;
 
