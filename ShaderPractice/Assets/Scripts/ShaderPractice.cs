@@ -9,6 +9,7 @@ public class ShaderPractice : MonoBehaviour
 {
     public GameObject ButtonTemplate;
     public Transform ParentTransform;
+    public Transform LightTransform;
 
     //prefab路径
     private string prefabPath;
@@ -26,7 +27,7 @@ public class ShaderPractice : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        LightTransform.Rotate(Vector3.up , 1.0f , Space.World);
     }
 
     private void Init()

@@ -1,7 +1,7 @@
 ﻿// Upgrade NOTE: replaced '_World2Object' with 'unity_WorldToObject'
 // Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
 
-Shader "Custom/PrePixelLevelDiffuseShader"
+Shader "Custom/HalfLambertlDiffuseShader"
 {
     Properties
     {
@@ -12,7 +12,7 @@ Shader "Custom/PrePixelLevelDiffuseShader"
 	    Pass{
 		    Tags { "LightMode"="ForwardBase" }
 
-			CGPROGRAM
+            CGPROGRAM
 
 		    #include "Lighting.cginc"
 		
@@ -49,7 +49,9 @@ Shader "Custom/PrePixelLevelDiffuseShader"
 				//获取世界空间的光照方向
 				fixed3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
 
-				fixed3 diffuse = _LightColor0.rgb * _Diffuse.rgb * saturate(dot(i.worldNormal,worldLightDir));
+				//半兰伯特公式计算漫反射
+				fixed3 halfLambert = dot(i.worldNormal,worldLightDir) * 0.5 + fixed3(0.5,0.5,0.5);
+				fixed3 diffuse = _LightColor0.rgb * _Diffuse.rgb * halfLambert;
 
 				fixed3 color = ambient + diffuse;
 				return fixed4(color,1.0);

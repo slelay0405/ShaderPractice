@@ -566,6 +566,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ButtonTemplate: {fileID: 45771443}
   ParentTransform: {fileID: 839527574}
+  LightTransform: {fileID: 170076735}
 --- !u!4 &672469302
 Transform:
   m_ObjectHideFlags: 0
