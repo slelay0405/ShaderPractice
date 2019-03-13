@@ -66,6 +66,7 @@
     <None Include="Assets\Shaders\SimpleShader.shader" />
     <None Include="Assets\Shaders\PrePixelLevelDiffuseShader.shader" />
     <None Include="Assets\Shaders\HalfLambertlDiffuseShader.shader" />
+    <None Include="Assets\Shaders\PreVertexLevelSpecularShader.shader" />
     <Reference Include="Unity.TextMeshPro.Editor">
       <HintPath>D:/GitHub/ShaderPractice/ShaderPractice/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
     </Reference>

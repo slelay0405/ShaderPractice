@@ -259,7 +259,7 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 1
-  m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Intensity: 1
   m_Range: 10
   m_SpotAngle: 30
@@ -632,7 +632,7 @@ GameObject:
   - component: {fileID: 1355184353}
   - component: {fileID: 1355184352}
   m_Layer: 0
-  m_Name: Capsule
+  m_Name: ReferenceObj
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -646,7 +646,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1355184350}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3, y: 0, z: 0}
+  m_LocalPosition: {x: -7, y: 0, z: 0}
   m_LocalScale: {x: 5, y: 5, z: 5}
   m_Children: []
   m_Father: {fileID: 672469302}
@@ -894,6 +894,21 @@ PrefabInstance:
     - target: {fileID: 5595532152607025140, guid: 09803173bd63a4843b9c9c9608305271,
         type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595532152607025143, guid: 09803173bd63a4843b9c9c9608305271,
+        type: 3}
+      propertyPath: m_Color.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595532152607025143, guid: 09803173bd63a4843b9c9c9608305271,
+        type: 3}
+      propertyPath: m_Color.g
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5595532152607025143, guid: 09803173bd63a4843b9c9c9608305271,
+        type: 3}
+      propertyPath: m_Color.b
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5595532152607025142, guid: 09803173bd63a4843b9c9c9608305271,

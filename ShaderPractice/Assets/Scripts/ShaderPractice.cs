@@ -27,7 +27,7 @@ public class ShaderPractice : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        LightTransform.Rotate(Vector3.up , 1.0f , Space.World);
+        LightTransform.Rotate(Vector3.up , 0.5f , Space.World);
     }
 
     private void Init()
