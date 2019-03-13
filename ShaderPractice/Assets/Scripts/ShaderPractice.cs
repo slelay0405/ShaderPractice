@@ -10,6 +10,12 @@ public class ShaderPractice : MonoBehaviour
     public GameObject ButtonTemplate;
     public Transform ParentTransform;
     public Transform LightTransform;
+    public GameObject ReferenceObject;
+    public Button RotateButton;
+    public Text TxtRotateButton;
+
+    private const string startRotate = "开始转圈圈";
+    private const string stopRotate = "停止转圈圈";
 
     //prefab路径
     private string prefabPath;
@@ -17,6 +23,8 @@ public class ShaderPractice : MonoBehaviour
     private FileInfo[] prefabInfo;
     //当前展示的ShaderPrefab
     private GameObject currentShowedShader;
+
+    private bool isRotating = false;
 
     // Start is called before the first frame update
     void Start()
@@ -27,17 +35,27 @@ public class ShaderPractice : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        LightTransform.Rotate(Vector3.up , 0.5f , Space.World);
+        if (isRotating)
+        {
+            LightTransform.Rotate(Vector3.up, 0.5f, Space.World);
+        }
     }
 
+    //初始化
     private void Init()
     {
         //获取prefab文件夹路径
         prefabPath = string.Format("{0}/Resources/Prefabs", Application.dataPath);
         InitPrefabInfo();
         InitExampleButton();
+
+        //初始化参照物和旋转按钮
+        ReferenceObject.SetActive(true);
+        RotateButton.gameObject.SetActive(true);
+        StartRotate();
     }
 
+    //初始化Prefab数据
     private void InitPrefabInfo()
     {
         //获取所有Prefab文件信息
@@ -45,6 +63,7 @@ public class ShaderPractice : MonoBehaviour
         prefabInfo = dir.GetFiles("*.prefab");
     }
 
+    //初始化展示按钮
     private void InitExampleButton()
     {
         //生成按钮
@@ -61,7 +80,8 @@ public class ShaderPractice : MonoBehaviour
         }
     }
 
-    public void SelectShader()
+    //点击展示按钮的回调
+    private void SelectShader()
     {
         if(null != currentShowedShader)
         {
@@ -71,5 +91,21 @@ public class ShaderPractice : MonoBehaviour
         string path = string.Format("Prefabs/{0}", prefabName);
         GameObject prefab = Resources.Load<GameObject>(path);
         currentShowedShader = GameObject.Instantiate<GameObject>(prefab, transform);
+    }
+
+    private void StartRotate()
+    {
+        isRotating = true;
+        TxtRotateButton.text = stopRotate;
+        RotateButton.onClick.RemoveListener(StartRotate);
+        RotateButton.onClick.AddListener(StopRotate);
+    }
+
+    private void StopRotate()
+    {
+        isRotating = false;
+        TxtRotateButton.text = startRotate;
+        RotateButton.onClick.RemoveListener(StopRotate);
+        RotateButton.onClick.AddListener(StartRotate);
     }
 }

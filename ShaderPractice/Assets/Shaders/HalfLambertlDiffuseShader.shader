@@ -37,7 +37,7 @@ Shader "Custom/HalfLambertlDiffuseShader"
 				o.pos = UnityObjectToClipPos(v.vertex);
 
 				//世界空间中顶点法线
-				o.worldNormal = normalize(mul(v.normal,(float3x3)unity_WorldToObject));
+				o.worldNormal = mul(v.normal,(float3x3)unity_WorldToObject);
 
 				return o;
 			}
@@ -49,8 +49,11 @@ Shader "Custom/HalfLambertlDiffuseShader"
 				//获取世界空间的光照方向
 				fixed3 worldLightDir = normalize(_WorldSpaceLightPos0.xyz);
 
+				//归一化世界空间法线
+				fixed3 worldNormal = normalize(i.worldNormal);
+
 				//半兰伯特公式计算漫反射
-				fixed3 halfLambert = dot(i.worldNormal,worldLightDir) * 0.5 + fixed3(0.5,0.5,0.5);
+				fixed3 halfLambert = dot(worldNormal,worldLightDir) * 0.5 + 0.5;
 				fixed3 diffuse = _LightColor0.rgb * _Diffuse.rgb * halfLambert;
 
 				fixed3 color = ambient + diffuse;
