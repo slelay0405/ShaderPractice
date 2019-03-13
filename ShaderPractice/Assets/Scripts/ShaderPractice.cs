@@ -14,8 +14,8 @@ public class ShaderPractice : MonoBehaviour
     public Button RotateButton;
     public Text TxtRotateButton;
 
-    private const string startRotate = "开始转圈圈";
-    private const string stopRotate = "停止转圈圈";
+    private const string startRotate = "开始公转";
+    private const string stopRotate = "停止公转";
 
     //prefab路径
     private string prefabPath;
