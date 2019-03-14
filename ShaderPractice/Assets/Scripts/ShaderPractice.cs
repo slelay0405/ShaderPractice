@@ -10,7 +10,6 @@ public class ShaderPractice : MonoBehaviour
     public GameObject ButtonTemplate;
     public Transform ParentTransform;
     public Transform LightTransform;
-    public GameObject ReferenceObject;
     public Button RotateButton;
     public Text TxtRotateButton;
 
@@ -49,8 +48,7 @@ public class ShaderPractice : MonoBehaviour
         InitPrefabInfo();
         InitExampleButton();
 
-        //初始化参照物和旋转按钮
-        ReferenceObject.SetActive(true);
+        //初始化旋转按钮
         RotateButton.gameObject.SetActive(true);
         StartRotate();
     }
