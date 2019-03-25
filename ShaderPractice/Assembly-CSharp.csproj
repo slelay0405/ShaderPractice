@@ -61,12 +61,14 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\ShaderPractice.cs" />
+    <Compile Include="Assets\Scripts\ShaderScripts\RampTexture.cs" />
     <Compile Include="Assets\Scripts\ShaderScripts\SimpleShader.cs" />
     <None Include="Assets\Shaders\NromalMapWorldSpaceShader.shader" />
     <None Include="Assets\Shaders\SingleTextureShader.shader" />
     <None Include="Assets\Shaders\PrePixelLevelSpecularShader.shader" />
     <None Include="Assets\Shaders\Blinn-PhoneSpecularShader.shader" />
     <None Include="Assets\Shaders\PreVertexLevelDiffuseShader.shader" />
+    <None Include="Assets\Shaders\RampTexture01.shader" />
     <None Include="Assets\Shaders\SimpleShader.shader" />
     <None Include="Assets\Shaders\PrePixelLevelDiffuseShader.shader" />
     <None Include="Assets\Shaders\HalfLambertlDiffuseShader.shader" />
