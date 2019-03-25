@@ -9,21 +9,12 @@ using UnityEngine.Rendering;
 public class RampTexture : MonoBehaviour
 {
     public List<Transform> ListButton;
-    public Transform ButtonParent;
     public MeshRenderer mesh;
-
-    private const string path = "/Resources/Textures";
 
     // Start is called before the first frame update
     void Start()
     {
         Init();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     public void Init()
@@ -37,9 +28,9 @@ public class RampTexture : MonoBehaviour
     private void ChangeTexture()
     {
         string textureName = EventSystem.current.currentSelectedGameObject.name;
-        string dataPath = string.Format("{0}{1}/{2}", Application.dataPath, path, textureName);
+        string dataPath = string.Format("Textures/{0}" ,textureName);
         Texture texture = Resources.Load(dataPath) as Texture;
-        mesh.materials[0].mainTexture = texture;
+        mesh.materials[0].SetTexture("_RampTex", texture);
     }
 
 }
