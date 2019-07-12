@@ -1,48 +1,82 @@
 ﻿Shader "Custom/AlphaBlendZWriteShader" {
 	Properties {
 		_Color ("Color", Color) = (1,1,1,1)
-		_MainTex ("Albedo (RGB)", 2D) = "white" {}
-		_Glossiness ("Smoothness", Range(0,1)) = 0.5
-		_Metallic ("Metallic", Range(0,1)) = 0.0
+		_MainTex ("Main Tex", 2D) = "white" {}
+		_AlphaScale("Alpha Scale", Range(0, 1)) = 1
 	}
 	SubShader {
-		Tags { "RenderType"="Opaque" }
-		LOD 200
-		
-		CGPROGRAM
-		// Physically based Standard lighting model, and enable shadows on all light types
-		#pragma surface surf Standard fullforwardshadows
+		Tags {"Queue"="Transparent" "IgnoreProjector"="True" "RenderType"="Transparent"}
 
-		// Use shader model 3.0 target, to get nicer looking lighting
-		#pragma target 3.0
-
-		sampler2D _MainTex;
-
-		struct Input {
-			float2 uv_MainTex;
-		};
-
-		half _Glossiness;
-		half _Metallic;
-		fixed4 _Color;
-
-		// Add instancing support for this shader. You need to check 'Enable Instancing' on materials that use the shader.
-		// See https://docs.unity3d.com/Manual/GPUInstancing.html for more information about instancing.
-		// #pragma instancing_options assumeuniformscaling
-		UNITY_INSTANCING_CBUFFER_START(Props)
-			// put more per-instance properties here
-		UNITY_INSTANCING_CBUFFER_END
-
-		void surf (Input IN, inout SurfaceOutputStandard o) {
-			// Albedo comes from a texture tinted by color
-			fixed4 c = tex2D (_MainTex, IN.uv_MainTex) * _Color;
-			o.Albedo = c.rgb;
-			// Metallic and smoothness come from slider variables
-			o.Metallic = _Metallic;
-			o.Smoothness = _Glossiness;
-			o.Alpha = c.a;
+		Pass{
+			ZWrite On
+			ColorMask 0
 		}
-		ENDCG
+
+		Pass{
+			Tags { "LightModel"="ForwardBase" }
+
+			ZWrite Off
+			Blend SrcAlpha OneMinusSrcAlpha
+
+			CGPROGRAM
+
+			#include "Lighting.cginc"
+
+			#pragma vertex vert
+			#pragma fragment frag
+
+			fixed4 _Color;
+			sampler2D _MainTex;
+			float4 _MainTex_ST;
+			fixed _AlphaScale;
+
+			struct a2v{
+				float4 vertex : POSITION;
+				float3 normal : NORMAL;
+				float4 texcoord : TEXCOORD0; 
+			};
+
+			struct v2f{
+				float4 clipVertex : SV_POSITION;
+				float3 worldNormal : TEXCOORD0;
+				float3 worldPosition : TEXCOORD1;
+				float2 uv : TEXCOORD2;
+			};
+
+			v2f vert(a2v i){
+				v2f o;
+
+				o.clipVertex = UnityObjectToClipPos(i.vertex);
+				o.worldNormal = UnityObjectToWorldNormal(i.normal);
+				o.worldPosition = mul(unity_ObjectToWorld,i.vertex).xyz;
+				o.uv = TRANSFORM_TEX(i.texcoord,_MainTex);
+
+				return o;
+			}
+
+			fixed4 frag(v2f i) : SV_Target{
+				fixed3 worldNormal = normalize(i.worldNormal);
+				fixed3 worldLightDir = normalize(UnityWorldSpaceLightDir(i.worldPosition));
+
+				//纹理采样
+				fixed4 texColor = tex2D(_MainTex,i.uv);
+
+				//反射率
+				fixed3 albedo = texColor.rgb * _Color.rgb;
+
+				//环境光
+				fixed3 ambient = UNITY_LIGHTMODEL_AMBIENT.xyz * albedo;
+
+				//漫反射
+				fixed3 diffuse = _LightColor0.rgb * albedo * max(0,dot(worldNormal,worldLightDir));
+
+				//混合
+				fixed4 blendColor = fixed4(ambient + diffuse, texColor.a * _AlphaScale);
+
+				return blendColor;
+			}
+			ENDCG
+		}
 	}
 	FallBack "Diffuse"
 }
